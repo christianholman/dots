@@ -63,7 +63,41 @@ yabai -m rule --add label="HHKB" app="HHKB Keymap Tool" title="About This Mac" m
 # ubersicht_spaces_refresh_command="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh dwidget id \"simple-bar\"'"
 
 # Clean up empty spaces with no windows on them.
-yabai -m signal --add event=space_changed action="sh ~/dotfiles/.config/yabai/scripts/cleanEmptySpaces.sh"
+# yabai -m signal --add event=space_changed action="sh ~/dotfiles/.config/yabai/scripts/cleanEmptySpaces.sh"
 
+# ===== Spaces =================================
+function setup_space {
+  local idx="$1"
+  local name="$2"
+  local space=
+  echo "setup space $idx : $name"
+
+  space=$(yabai -m query --spaces --space "$idx")
+  if [ -z "$space" ]; then
+    yabai -m space --create
+  fi
+
+  yabai -m space "$idx" --label "$name"
+}
+
+setup_space 1 code
+setup_space 2 terminal
+setup_space 3 web
+setup_space 4 social
+setup_space 5 media
+setup_space 6 other
+
+for idx in $(yabai -m query --spaces | jq '.[].index | select(. > 6)' | sort -nr); do
+  yabai -m space --destroy "$idx"
+done
+
+# move some apps automatically to specific spaces
+yabai -m rule --add app="^Code$" space=1
+yabai -m rule --add app="^kitty$" space=2
+yabai -m rule --add app="^Google Chrome$" space=3
+yabai -m rule --add app="^Telegram$" space=4
+yabai -m rule --add app="^Discord$" space=4
+yabai -m rule --add app="^Gather$" space=4
+yabai -m rule --add app="^Spotify$" space=5
 
 echo "yabai: configuration loaded...\\n

@@ -22,7 +22,7 @@ cmd + shift - return : open -na /Applications/Google\ Chrome.app
 # open vscode
 cmd + ctrl - return : open -na /Applications/Visual\ Studio\ Code.app/
 # open finder
-cmd - n : open `pwd`
+# cmd - n : open `pwd`
 # open system preferences
 hyper - c : open "x-apple.systempreferences:"
 # === Resize Mode ===
@@ -109,16 +109,16 @@ cmd + ctrl - 4 : yabai -m window --space 4; yabai -m space --focus 4
 # Equalize size of windows
 hyper - e : yabai -m space --balance
 
-# Enable / Disable gaps in current workspace
-lcmd - i : yabai -m space --toggle padding; \
-	  yabai -m space --toggle gap; \
-	  yabai -m config external_bar off:0:0; \
-	  sketchybar --bar hidden=true;
-
-rcmd - i : yabai -m space --toggle padding; \
-	 yabai -m space --toggle gap; \
-	 yabai -m config external_bar all:30:0;\
-	 sketchybar --bar hidden=false;
+# # Enable / Disable gaps in current workspace
+# lcmd - i : yabai -m space --toggle padding; \
+# 	  yabai -m space --toggle gap; \
+# 	  yabai -m config external_bar off:0:0; \
+# 	  sketchybar --bar hidden=true;
+# 
+# rcmd - i : yabai -m space --toggle padding; \
+# 	 yabai -m space --toggle gap; \
+# 	 yabai -m config external_bar all:30:0;\
+# 	 sketchybar --bar hidden=false;
 
 # Rotate windows clockwise and anticlockwise
 alt - r         : yabai -m space --rotate 270
@@ -142,4 +142,7 @@ shift + alt - space : \
 # Make window native fullscreen
 alt - f         : yabai -m window --toggle zoom-fullscreen
 shift + alt - f : yabai -m window --toggle native-fullscreen
+
+# Quickly restart yabai
+cmd + shift - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
